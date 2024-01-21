@@ -161,7 +161,7 @@ VALUES
   ('Heath Ledger','Joker'),
   ('Aaron Eckhart','Harvey Dent'),
   ('Maggie Gyllenhaal','Rachel Dawes'),
-  ('Tom Hardy','Bane')
+  ('Tom Hardy','Bane'),
   ('Joseph Gordon-Levitt','John Blake'),
   ('Anne Hathaway','Selina Kyle');
 
@@ -184,4 +184,8 @@ SELECT title, year_released, MPAA_rating, studio_name
 
 
 -- The SQL statement for the cast output
--- TODO!
+SELECT movies.name, actors.name, actors.character
+FROM movies
+INNER JOIN roles ON movies.id = roles.movie_id
+INNER JOIN actors ON actors.id = roles.actor_id
+;
