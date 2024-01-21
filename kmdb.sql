@@ -116,21 +116,24 @@ CREATE TABLE movies (
     title TEXT,
     year_released INTEGER,
     MPAA_rating TEXT,
-    studio_id INTEGER,
-    studio_name TEXT
+    studio_id INTEGER
 );
 
 CREATE TABLE actors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     character_name TEXT,
-    movie_id INTEGER,
-    movie_name TEXT
 );
 
 CREATE TABLE studios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT
+);
+
+CREATE TABLE roles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    movie_id INTEGER,
+    actor_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -139,11 +142,30 @@ CREATE TABLE studios (
 INSERT INTO movies (title, 
 year_released, 
 MPAA_rating, 
-studio_name)
+studio_name
+)
 VALUES
   ('Batman Begins', 2005, "PG-13", "Warner Bros."),
   ('The Dark Night', 2008, "PG-13", "Warner Bros."),
   ('The Dark Night Rises', 2012, "PG-13", "Warner Bros.");
+
+INSERT INTO actors (name, 
+character_name
+)
+VALUES
+  ('Christian Bale', 'Bruce Wayne'),
+  ('Michael Caine', 'Alfred'),
+  ('Liam Neeson','Ra''s Al Ghul'),
+  ('Katie Holmes', 'Rachel Dawes'),
+  ('Gary Oldman','Commissioner Gordon'),
+  ('Heath Ledger','Joker'),
+  ('Aaron Eckhart','Harvey Dent'),
+  ('Maggie Gyllenhaal','Rachel Dawes'),
+  ('Tom Hardy','Bane')
+  ('Joseph Gordon-Levitt','John Blake'),
+  ('Anne Hathaway','Selina Kyle');
+
+
 
 -- Prints a header for the movies output
 .print "Movies"
