@@ -108,6 +108,7 @@
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS studios;
+DROP TABLE IF EXISTS roles;
 
 -- Create new tables, according to your domain model
 
@@ -116,7 +117,7 @@ CREATE TABLE movies (
     title TEXT,
     year_released INTEGER,
     MPAA_rating TEXT,
-    studio_name TEXT
+    studio_id INTEGER
 );
 
 CREATE TABLE actors (
@@ -138,17 +139,23 @@ CREATE TABLE roles (
 
 -- Insert data into your database that reflects the sample data shown above
 
+INSERT INTO studios (name
+)
+VALUES
+    ('Warner Bros.'
+    );
+
 INSERT INTO movies (title, 
 year_released, 
 MPAA_rating, 
-studio_name
+studio_id
 )
 VALUES
-  ('Batman Begins', 2005, "PG-13", "Warner Bros."),
-  ('The Dark Night', 2008, "PG-13", "Warner Bros."),
-  ('The Dark Night Rises', 2012, "PG-13", "Warner Bros.");
+  ('Batman Begins', 2005, "PG-13", 1),
+  ('The Dark Night', 2008, "PG-13", 1),
+  ('The Dark Night Rises', 2012, "PG-13", 1);
 
-INSERT INTO actors (name, 
+INSERT INTO actors (name 
 )
 VALUES
   ('Christian Bale'),
@@ -163,25 +170,22 @@ VALUES
   ('Joseph Gordon-Levitt'),
   ('Anne Hathaway');
 
-INSERT INTO roles (character_name,
-movie_id,
-actor_id
-)
-
+INSERT INTO roles (character_name, movie_id, actor_id)
 VALUES 
-  ('Bruce Wayne',1,1)
-  ('Alfred',1,2)
-  ('Ra''s Al Ghul',1,3)
-  ('Rachel Dawes',1,4)
-  ('Commissioner Gordon',1,5)
-  ('Bruce Wayne',2,1)
-  ('Joker',2,6)
-  ('Harvey Dent',2,7)
-  ('Rachel Dawes',2,8)
-  ('Bruce Wayne',3,1)
-  ('Commissioner Gordon',3,5)
-  ('Bane',3,9)
-  ('John Blake',3,10)
+  ('Bruce Wayne',1,1),
+  ('Alfred',1,2),
+  ("Ra's Al Ghul",1,3),
+  ('Rachel Dawes',1,4),
+  ('Commissioner Gordon',1,5),
+  ('Bruce Wayne',2,1),
+  ('Joker',2,6),
+  ('Harvey Dent',2,7),
+  ('Alfred',2,2),
+  ('Rachel Dawes',2,8),
+  ('Bruce Wayne',3,1),
+  ('Commissioner Gordon',3,5),
+  ('Bane',3,9),
+  ('John Blake',3,10),
   ('Selena Kyle',3,11);
 
 -- Prints a header for the movies output
@@ -190,8 +194,10 @@ VALUES
 .print ""
 
 -- The SQL statement for the movies output
-SELECT title, year_released, MPAA_rating, studio_name
-    FROM movies;
+SELECT movies.title, movies.year_released, movies.MPAA_rating, studios.name
+    FROM movies
+    INNER JOIN studios ON studios.id = movies.studio_id
+    ;
 
 -- Prints a header for the cast output
 .print ""
@@ -202,7 +208,7 @@ SELECT title, year_released, MPAA_rating, studio_name
 
 -- The SQL statement for the cast output
 SELECT movies.title, actors.name, roles.character_name
-FROM movies
-INNER JOIN roles ON movies.id = roles.movie_id
+FROM roles
 INNER JOIN actors ON actors.id = roles.actor_id
+INNER JOIN movies ON movies.id = roles.movie_id
 ;
