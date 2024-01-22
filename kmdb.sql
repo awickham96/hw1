@@ -116,13 +116,12 @@ CREATE TABLE movies (
     title TEXT,
     year_released INTEGER,
     MPAA_rating TEXT,
-    studio_id INTEGER
+    studio_name TEXT
 );
 
 CREATE TABLE actors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    character_name TEXT,
+    name TEXT
 );
 
 CREATE TABLE studios (
@@ -132,12 +131,12 @@ CREATE TABLE studios (
 
 CREATE TABLE roles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    character_name TEXT,
     movie_id INTEGER,
     actor_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
--- Use hard-coded foreign key IDs when necessary
 
 INSERT INTO movies (title, 
 year_released, 
@@ -150,22 +149,40 @@ VALUES
   ('The Dark Night Rises', 2012, "PG-13", "Warner Bros.");
 
 INSERT INTO actors (name, 
-character_name
 )
 VALUES
-  ('Christian Bale', 'Bruce Wayne'),
-  ('Michael Caine', 'Alfred'),
-  ('Liam Neeson','Ra''s Al Ghul'),
-  ('Katie Holmes', 'Rachel Dawes'),
-  ('Gary Oldman','Commissioner Gordon'),
-  ('Heath Ledger','Joker'),
-  ('Aaron Eckhart','Harvey Dent'),
-  ('Maggie Gyllenhaal','Rachel Dawes'),
-  ('Tom Hardy','Bane'),
-  ('Joseph Gordon-Levitt','John Blake'),
-  ('Anne Hathaway','Selina Kyle');
+  ('Christian Bale'),
+  ('Michael Caine'),
+  ('Liam Neeson'),
+  ('Katie Holmes'),
+  ('Gary Oldman'),
+  ('Heath Ledger'),
+  ('Aaron Eckhart'),
+  ('Maggie Gyllenhaal'),
+  ('Tom Hardy'),
+  ('Joseph Gordon-Levitt'),
+  ('Anne Hathaway');
 
+INSERT INTO roles (character_name,
+movie_id,
+actor_id
+)
 
+VALUES 
+  ('Bruce Wayne',1,1)
+  ('Alfred',1,2)
+  ('Ra''s Al Ghul',1,3)
+  ('Rachel Dawes',1,4)
+  ('Commissioner Gordon',1,5)
+  ('Bruce Wayne',2,1)
+  ('Joker',2,6)
+  ('Harvey Dent',2,7)
+  ('Rachel Dawes',2,8)
+  ('Bruce Wayne',3,1)
+  ('Commissioner Gordon',3,5)
+  ('Bane',3,9)
+  ('John Blake',3,10)
+  ('Selena Kyle',3,11);
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -184,7 +201,7 @@ SELECT title, year_released, MPAA_rating, studio_name
 
 
 -- The SQL statement for the cast output
-SELECT movies.name, actors.name, actors.character
+SELECT movies.title, actors.name, roles.character_name
 FROM movies
 INNER JOIN roles ON movies.id = roles.movie_id
 INNER JOIN actors ON actors.id = roles.actor_id
